@@ -97,7 +97,13 @@ public class Employee extends Main{
                     else throw new NumberFormatException("hRateF Not between 6.75 and 30.50");
                 }
                 catch(NumberFormatException ex){hRateF.setText("Needs to be between 6.75 and 30.50");}
-                
+                try
+                {
+                    tempd=Double.parseDouble(hWorkedF.getText());
+                    if(tempd<1||tempd>60)throw new NumberFormatException("Not between 1 and 60");
+                    else employs[eList.getSelectedIndex()].setHours(tempd);
+                }
+                catch(NumberFormatException ex){hWorkedF.setText("Needs to be between 1 and 60");}
                 refresh();
                 buttonPress=false;
             }
@@ -108,7 +114,47 @@ public class Employee extends Main{
         add.setBounds(315,5,150,30);
         add.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                buttonPress=true;
+                boolean addPerson=true;
+                String name=nameF.getText();
+                int type=0;
+                double hourRate=0,hours=0;
+                if(name.length()<2)
+                {
+                    nameF.setText("More than 2 letters");
+                    addPerson=false;
+                }
+                try
+                {
+                    type=Integer.parseInt(typeF.getText());
+                    if(type<1&&type>2)throw new NumberFormatException("1 or 2 only");
+                }
+                catch(NumberFormatException ex){typeF.setText("Needs to be 1 or 2");addPerson=false;}
+                try
+                {
+                    hourRate=Double.parseDouble(hRateF.getText());
+                    if(hourRate>30.5||hourRate<6.75)throw new NumberFormatException("Not between 6.75 and 30.50");
+                    hourRate=Math.round(hourRate*100);
+                    hourRate=hourRate/100;
+                }
+                catch(NumberFormatException ex){hRateF.setText("Needs to be between 6.75 and 30.50");addPerson=false;}
+                try
+                {
+                    hours=Double.parseDouble(hWorkedF.getText());
+                    if(hours<1||hours>60)throw new NumberFormatException("Not between 1 and 60");
+                }
+                catch(NumberFormatException ex){hWorkedF.setText("Needs to be between 1 and 60");addPerson=false;}
+                if(addPerson==true)
+                {
+                    addEm();
+                    employs[employs.length-1]=new EClass();
+                    employs[employs.length-1].setHours(hours);
+                    employs[employs.length-1].setType(type);
+                    employs[employs.length-1].setPay(hourRate);
+                    employs[employs.length-1].setName(name);
+                }
                 refresh();
+                buttonPress=false;
             }
         });
         refresh();
@@ -128,11 +174,22 @@ public class Employee extends Main{
     }
     private void refresh()
     {
+        int index=eList.getSelectedIndex();
         eList.removeAllItems();
         for(int i=0;i<employs.length;i++)
         {
             eList.addItem(employs[i].getName());
         }
+        eList.setSelectedIndex(index);
+        try
+        {
+            nameF.setText(employs[index].getName());
+            hRateF.setText(""+employs[index].getPay());
+            hWorkedF.setText(""+employs[index].getHours());
+            typeF.setText(""+employs[index].getType());
+            payF.setText(""+employs[index].getTotalPay());
+        }
+        catch(ArrayIndexOutOfBoundsException ex){}
     }
     private void addEm()
     {

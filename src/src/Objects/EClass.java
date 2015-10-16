@@ -7,6 +7,35 @@ public class EClass {
     {
         
     }
+    public double getTotalPay()
+    {
+        double out=0;
+        if(type==1)
+        {
+            if(hours>40)
+            {
+                double tempHours=hours;
+                out+=40*payPerHour;
+                tempHours=tempHours-40;
+                out+=(tempHours*(payPerHour*2));
+                out*=100;
+                out=Math.round(out);
+                out/=100;
+            }
+            else
+            {
+                out=hours*payPerHour;
+            }
+        }
+        else
+        {
+            out=hours*payPerHour;
+            out*=100;
+            out=Math.round(out);
+            out/=100;
+        }
+        return out;
+    }
     public double getPay()
     {
         return payPerHour;
