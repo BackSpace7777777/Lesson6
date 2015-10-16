@@ -12,6 +12,7 @@ public class GuessGame extends Main{
     private JTextField number,infoBox;
     private JButton submit;
     private GuessMachine gm;
+    private boolean pa=false;
     public GuessGame()
     {
         gm=new GuessMachine();
@@ -32,7 +33,29 @@ public class GuessGame extends Main{
         submit.setVisible(false);
         submit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
+                if(pa==false)
+                {
+                    try
+                    {
+                        if(gm.setGuess(Integer.parseInt(number.getText())))
+                        {
+                            totalGuessL.setText("Guesses so far: " + gm.getAmountOfGuesses());
+                            if(gm.getHint().equals("You have won!"))
+                            {
+                                submit.setText("Play again");
+                                pa=true;
+                            }
+                            infoBox.setText(gm.getHint());
+                        }
+                    }
+                    catch(Exception ex){}
+                }
+                else
+                {
+                    gm.reset();
+                    submit.setText("Submit");
+                    pa=false;
+                }
             }
         });
         infoBox=new JTextField();
