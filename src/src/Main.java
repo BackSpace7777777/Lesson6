@@ -8,14 +8,25 @@ import javax.swing.JFrame;
 public class Main {
     public static JFrame frame=new JFrame("Lesson 6 - Main Menu");
     public static JButton menuButton;
-    private static JButton employee,guessGame;
+    private static JButton employee,guessGame,patron;
     private static Employee e;
     private static GuessGame gg;
+    private static PatronBook p;
     public static void main(String[] args) {
         frame.setSize(475,200);
         frame.setLayout(null);
         frame.setDefaultCloseOperation(3);
         frame.setResizable(false);
+        patron=new JButton();
+        patron.setText("Patron Books");
+        patron.setBounds(315,5,150,30);
+        patron.setVisible(true);
+        patron.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                menu(false);
+                p.visible(true);
+            }
+        });
         guessGame=new JButton();
         guessGame.setText("Guessing Game");
         guessGame.setBounds(160,5,150,30);
@@ -46,8 +57,10 @@ public class Main {
             }
         });
         e=new Employee();
+        p=new PatronBook();
         gg=new GuessGame();
         frame.add(employee);
+        frame.add(patron);
         frame.add(menuButton);
         frame.add(guessGame);
         frame.setVisible(true);
@@ -56,10 +69,12 @@ public class Main {
     {
         e.visible(false);
         gg.visible(false);
+        p.visible(false);
         frame.setSize(475,200);
         frame.setTitle("Lesson 6 - Main Menu");
         employee.setVisible(tf);
         guessGame.setVisible(tf);
+        patron.setVisible(tf);
         if(tf)menuButton.setVisible(false);
         else menuButton.setVisible(true);
     }
