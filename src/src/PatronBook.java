@@ -20,8 +20,10 @@ public class PatronBook extends Main{
         for(int i=0;i<books.length;i++)displayString+=books[i].getNameOfBook() + "\n";
         displayString+="======================\n";
         patrons[0]=new Patron("John Cena",books);
+        patrons[1]=new Patron("Me",books);
         displayString+=bookTaking(patrons[0],books[1]) + '\n';
-        displayString+=patrons[0].hasBooksOut();
+        displayString+=bookTaking(patrons[1],books[1]) + '\n';
+        displayString+=patrons[1].hasBooksOut();
         con=new JTextArea();
         con.setBounds(5,40,frame.getWidth()-15,750-70);
         con.setEditable(false);
@@ -46,7 +48,7 @@ public class PatronBook extends Main{
         }
         else
         {
-            return b.getNameOfBook() + " was not returned";
+            return b.getNameOfBook() + " could not be returned";
         }
     }
     private String bookTaking(Patron p,Book b)
@@ -66,7 +68,7 @@ public class PatronBook extends Main{
         }
         else
         {
-            return b.getNameOfBook() + " was not taken out";
+            return b.getNameOfBook() + " could not be taken out";
         }
     }
     public void visible(boolean tf)

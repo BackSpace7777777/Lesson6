@@ -28,10 +28,13 @@ public class Patron {
         String out="";
         for(int i=0;i<bookList.length;i++)
         {
-            if(bookList[i].getTakenOutBy().equals(name))
+            try
             {
-                out+=bookList[i].getNameOfBook() + "\n";
-            }
+                if(bookList[i].getTakenOutBy().equals(name))
+                {
+                    out+=bookList[i].getNameOfBook() + "\n";
+                }
+            }catch(NullPointerException ex){}
         }
         return out;
     }

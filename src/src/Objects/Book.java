@@ -14,7 +14,7 @@ public class Book {
     }
     public String getTakenOutBy()
     {
-        return takenLog[index];
+        return takenLog[takenLog.length-1];
     }
     public boolean takeOut(String name)
     {
